@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct Node {
   int valor;
+  char nome[255];
   struct Node *next;
 } Node;
 
 // função para criar nodes
-void insert_node( Node **head, int valor ){
+void insert_node( Node **head, int valor, char *nome){
   Node *new = malloc(sizeof(Node)); // cria e aloca node
 
   if ( new == NULL ){ // verifica se criou
@@ -15,6 +17,7 @@ void insert_node( Node **head, int valor ){
   }
 
   new->valor = valor; // atribui valor
+  strcpy(new->nome, nome);
   new->next = NULL; // aponta para null
 
   if ( *head == NULL ) { // verifica se lista é vazia
@@ -32,7 +35,7 @@ void insert_node( Node **head, int valor ){
 void list_content( Node **head ) {
   Node *tmp = *head;
   while( tmp != NULL ) {
-    printf("%d\n", tmp->valor);
+    printf("%d\t %s\n", tmp->valor, tmp->nome);
     tmp = tmp->next;
   }
 }
@@ -40,11 +43,20 @@ void list_content( Node **head ) {
 int main(){
   Node *head = NULL;
   
-  insert_node(&head, 4);
-  insert_node(&head, 3);
-  insert_node(&head, 8);
-  insert_node(&head, 9);
-  insert_node(&head, 5);
+  int num_nos = 0;
+  int valor = 0;
+  char nome[255];
+
+  printf("Quantos nós deseja criar? ");
+  scanf("%d", &num_nos);
+
+  for(int i = 0; i < num_nos; i++){
+    printf("Digite o valor a inserir: ");
+    scanf("%d", &valor);
+    printf("Digite o nome: ");
+    scanf("%s", nome);
+    insert_node(&head, valor, nome);
+  }
 
   list_content(&head);
 
