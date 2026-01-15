@@ -8,7 +8,7 @@ typedef struct NODE{
   struct NODE *next;
 } NODE;
 
-void insert_note(NODE **root, int valor, char *nome){
+void insert_node(NODE **root, int valor, char *nome){
   NODE *new = malloc(sizeof(NODE));
 
   if( new == NULL ){ // verifica se o new foi alocado corretamente
@@ -51,17 +51,17 @@ int main(){
   // scanf("%s", nome);
   fgets(nome, sizeof(nome), stdin);
 
-  insert_note(&root, 4, nome);
-  insert_note(&root, 5, "oioi");
-  insert_note(&root, 6, "ecaeca");
+  insert_node(&root, 4, nome);
+  insert_node(&root, 5, "oioi");
+  insert_node(&root, 6, "ecaeca");
 
-  insert_note(&middle, 12, "teses");
-  insert_note(&middle, 2, "adaded");
-  insert_note(&middle, 1, "reedede");
+  insert_node(&middle, 12, "teses");
+  insert_node(&middle, 2, "adaded");
+  insert_node(&middle, 1, "reedede");
 
-  insert_note(&tail, 8, "efepde");
-  insert_note(&tail, 8, "dedede");
-  insert_note(&tail, 8, "epdelde");
+  insert_node(&tail, 8, "efepde");
+  insert_node(&tail, 8, "dedede");
+  insert_node(&tail, 8, "epdelde");
 
   NODE *array[3] = { root, middle, tail };
  
