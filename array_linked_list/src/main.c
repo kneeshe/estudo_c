@@ -8,67 +8,70 @@ typedef struct NODE{
   struct NODE *next;
 } NODE;
 
-int main(){
+void insert_note(NODE **root, int valor, char *nome){
+  NODE *new = malloc(sizeof(NODE));
 
-  // definicao primeira linked list
-  NODE *no1 = NULL;
-  no1 = malloc(sizeof(NODE));
-  NODE *no2 = NULL;
-  no2 = malloc(sizeof(NODE));
-  NODE *no3 = NULL;
-  no3 = malloc(sizeof(NODE));
-
-  // definicao segunda linked list
-  NODE *no4 = NULL;
-  no4 = malloc(sizeof(NODE));
-  NODE *no5 = NULL;
-  no5 = malloc(sizeof(NODE));
-  NODE *no6 = NULL;
-  no6 = malloc(sizeof(NODE));
-
-  // criação da linked list
-  no1->valor = 1;
-  strcpy(no1->nome, "Cris");
-  no1->next = no2;
-
-  no2->valor = 2;
-  strcpy(no2->nome, "Agatha");
-  no2->next = no3;
-
-  no3->valor = 3;
-  strcpy(no3->nome, "Diogo");
-  no3->next = NULL;
-
-  // criação da linked list
-  no4->valor = 4;
-  strcpy(no4->nome, "Nome");
-  no4->next = no5;
-
-  no5->valor = 5;
-  strcpy(no5->nome, "Aleatorio");
-  no5->next = no6;
-
-  no6->valor = 6;
-  strcpy(no6->nome, "Morte");
-  no6->next = NULL;
-
-  NODE *array[2] = { no1, no4 };
-
-  for ( int i = 0; i < 2; i++ ){
-    printf (" === Array %d === \n", i);
-    while( array[i] != NULL){
-      printf("%d\t", array[i]->valor);
-      printf("%s\n", array[i]->nome);
-      array[i] = array[i]->next;
-    }
+  if( new == NULL ){ // verifica se o new foi alocado corretamente
+    exit(1);
   }
 
-  free(no1);
-  free(no2);
-  free(no3);
-  free(no4);
-  free(no5);
-  free(no6);
+  new->valor = valor;
+  strcpy(new->nome, nome);
+
+  if(*root == NULL){ // verifica se a raiz existe. se não, aloca a raiz ao new node
+    *root = new;
+    return;
+  }
+
+  NODE *cur = *root;
+  while(cur->next != NULL){
+    cur = cur->next;
+  }
+  cur->next = new;
+}
+
+void list_node(NODE **root){
+  NODE *cur = *root;
+  while (cur != NULL) {
+    printf("%d\t%s\n", cur->valor, cur->nome);
+    cur = cur->next;
+  }
+  printf("\n");
+}
+
+int main(){
+
+  NODE *root = NULL;
+  NODE *middle = NULL;
+  NODE *tail = NULL;
+
+  char nome[255];
+
+  printf("Digite um nome: ");
+  // scanf("%s", nome);
+  fgets(nome, sizeof(nome), stdin);
+
+  insert_note(&root, 4, nome);
+  insert_note(&root, 5, "oioi");
+  insert_note(&root, 6, "ecaeca");
+
+  insert_note(&middle, 12, "teses");
+  insert_note(&middle, 2, "adaded");
+  insert_note(&middle, 1, "reedede");
+
+  insert_note(&tail, 8, "efepde");
+  insert_note(&tail, 8, "dedede");
+  insert_note(&tail, 8, "epdelde");
+
+  NODE *array[3] = { root, middle, tail };
+ 
+  for( int i = 0; i < 3; i++ ){
+    list_node(&array[i]);
+  }
+
+  free(root);
+  free(middle);
+  free(tail);
 
  return 0;
 }
